@@ -242,7 +242,8 @@
                 font-size: 2em;
             }
             .emoji {
-                font-size: 4em;
+                width: 150px;
+                height: 150px;
             }
             .message {
                 font-size: 1.2em;
@@ -296,7 +297,7 @@
         let noPadding = 18; // px units
 
         const messages = [
-            "Will you be my my girlfriend? 💕",
+            "Will you be my girlfriend? 💕",
             "Are you sure, no? 🥺",
             "still no? Please? 💔",
             "Think about it... 💭",
