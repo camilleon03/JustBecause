@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My girlfriend? 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 50%, #ffd4ea 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-50px) rotate(10deg);
+            }
+        }
+
+        .container {
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.2);
+            max-width: 600px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .question-screen {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .question-screen.hidden {
+            display: none;
+        }
+
+        h1 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 3em;
+            color: #ff1e8d;
+            margin-bottom: 30px;
+            font-weight: 600;
+            animation: bounce 1s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .emoji {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 10px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .message {
+            font-size: 1.4em;
+            color: #d81b60;
+            margin-bottom: 40px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            min-height: 100px;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.3em;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff1e8d 100%);
+            color: white;
+            transform-origin: center;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(255, 30, 141, 0.4);
+        }
+
+        .btn-no {
+            background: #f5f5f5;
+            color: #888;
+            transition: all 0.3s ease;
+        }
+
+        .btn-no:hover {
+            background: #e0e0e0;
+            transform: scale(0.98);
+        }
+
+        /* Success screen */
+        .success-screen {
+            display: none;
+            animation: celebrateIn 0.8s ease-out;
+        }
+
+        .success-screen.show {
+            display: block;
+        }
+
+        @keyframes celebrateIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+            }
+            60% {
+                transform: scale(1.1) rotate(5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .success-screen h2 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3.5em;
+            color: #ff1e8d;
+            margin-bottom: 30px;
+            animation: rainbow 3s ease-in-out infinite;
+        }
+
+        @keyframes rainbow {
+            0%, 100% { color: #ff1e8d; }
+            33% { color: #ff6b9d; }
+            66% { color: #ff4081; }
+        }
+
+        .gif-container {
+            margin: 30px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.3);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .gif-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .celebration-text {
+            font-size: 1.5em;
+            color: #d81b60;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff1e8d;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .emoji {
+                font-size: 4em;
+            }
+            .message {
+                font-size: 1.2em;
+            }
+            .btn {
+                font-size: 1.1em;
+                padding: 15px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="heart-bg" style="top: 10%; left: 10%;">💕</div>
+    <div class="heart-bg" style="top: 20%; right: 15%; animation-delay: 2s;">💖</div>
+    <div class="heart-bg" style="bottom: 15%; left: 20%; animation-delay: 4s;">💗</div>
+    <div class="heart-bg" style="bottom: 25%; right: 10%; animation-delay: 6s;">💝</div>
+    <div class="heart-bg" style="top: 50%; left: 5%; animation-delay: 3s;">💘</div>
+    <div class="heart-bg" style="top: 60%; right: 8%; animation-delay: 5s;">💓</div>
+
+    <div class="container">
+        <!-- Question Screen -->
+        <div class="question-screen" id="questionScreen">
+            <h1>Be My Valentine?</h1>
+            <img src="https://media1.tenor.com/m/erhOwwEWTLEAAAAd/minions-flushed.gif" alt="Cute minion" class="emoji">
+            <p class="message">Will you be my girlfriend? 💕</p>
+            <div class="buttons">
+                <button class="btn btn-yes" id="yesBtn">Yes! 💖</button>
+                <button class="btn btn-no" id="noBtn">No</button>
+            </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div class="success-screen" id="successScreen">
+            <h2>Yay! 🎉</h2>
+            <div class="gif-container">
+                <img src="https://i.pinimg.com/originals/a7/74/7c/a7747ca28a379689d23eb9774ddad302.gif" alt="Celebration">
+            </div>
+            <p class="celebration-text">I knew you'd say yes! 💕</p>
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionScreen = document.getElementById('questionScreen');
+        const successScreen = document.getElementById('successScreen');
+
+        let noClickCount = 0;
+        let yesFontSize = 1.3; // em units
+        let noPadding = 18; // px units
+
+        const messages = [
+            "Will you be my my girlfriend? 💕",
+            "Are you sure, no? 🥺",
+            "still no? Please? 💔",
+            "Think about it... 💭",
+            "hmm? 🙏",
+            "You're breaking my heart... 💔",
+            "We can be together, you know? 😭",
+            "Come on... 🥹",
+            "hmphhh! 😢",
+            "cinta pleaseee! 😭💕"
+        ];
+
+        noBtn.addEventListener('click', () => {
+            noClickCount++;
+            
+            // Update message
+            const messageEl = document.querySelector('.message');
+            if (noClickCount < messages.length) {
+                messageEl.textContent = messages[noClickCount];
+            }
+
+            // Grow yes button
+            yesFontSize += 0.3;
+            yesBtn.style.fontSize = yesFontSize + 'em';
+            yesBtn.style.padding = (18 + noClickCount * 3) + 'px ' + (40 + noClickCount * 5) + 'px';
+
+            // Shrink no button
+            noPadding = Math.max(5, noPadding - 2);
+            const newFontSize = Math.max(0.7, 1.3 - noClickCount * 0.1);
+            noBtn.style.fontSize = newFontSize + 'em';
+            noBtn.style.padding = noPadding + 'px ' + (noPadding * 2) + 'px';
+
+            // Add bounce animation to yes button
+            yesBtn.style.animation = 'none';
+            setTimeout(() => {
+                yesBtn.style.animation = 'pulse 1.5s ease-in-out infinite';
+            }, 10);
+
+            // After 5 clicks, make no button nearly invisible
+            if (noClickCount >= 5) {
+                noBtn.style.opacity = Math.max(0.1, 1 - (noClickCount - 5) * 0.15);
+                noBtn.style.cursor = 'not-allowed';
+            }
+
+            // After 8 clicks, hide no button completely
+            if (noClickCount >= 8) {
+                noBtn.style.display = 'none';
+            }
+        });
+
+        yesBtn.addEventListener('click', () => {
+            // Hide question screen
+            questionScreen.classList.add('hidden');
+            
+            // Show success screen
+            successScreen.classList.add('show');
+
+            // Create confetti
+            createConfetti();
+        });
+
+        function createConfetti() {
+            const colors = ['#ff1e8d', '#ff6b9d', '#ff4081', '#ffc0cb', '#ff69b4'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+</html>
